@@ -19,9 +19,12 @@ class SumEtCount : public TransformFunction {
 				sum += newValue;
 				count++;
 			} while (inputReader.next());
-			ofstream binFile ("/tmp/test.bin", ios::binary);
-			binFile.write(reinterpret_cast<const char *>(&num), sizeof(vfloat));
-			binFile.write(reinterpret_cast<const char *>(&count), sizeof(int));
+			
+			ofstream binFile;
+			binFile.open("/tmp/test.bin", ios::binary);
+			binFile.write(reinterpret_cast<char*>(&sum), sizeof(sum));
+			binFile.write(reinterpret_cast<char*>(&count), sizeof(count));
+			binFile.close();
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
