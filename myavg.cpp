@@ -1,5 +1,6 @@
 #include "Vertica.h"
 #include <stdio.h>
+#include <fstream>
 
 using namespace Vertica;
 using namespace std;
@@ -18,13 +19,11 @@ class SumEtCount : public TransformFunction {
 				sum += newValue;
 				count++;
 			} while (inputReader.next());
-			
+			ofstream binFile ("/tmp/test.bin", ios::binary);
+			binFile.write(reinterpret_cast<const char *>(&num), sizeof(vfloat));
+			binFile.write(reinterpret_cast<const char *>(&count), sizeof(int));
 			outputWriter.setFloat(0, sum);
-			outputWriter.setInt(1, count);
-			FILE* binFile;
-			binFile = fopen("/tmp/test.bin", "wb");
-			fwrite(&sum, sizeof(vfloat), 1, binFile);
-			fwrite(&count, sizeof(int), 1, binFile);
+			outputWriter.setInt(1, count);			
 			outputWriter.next();			
 		} catch (exception &e) {
 			vt_report_error(0, "exception while processing: [%s]", e.what());
