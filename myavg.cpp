@@ -21,7 +21,7 @@ class SumEtCount : public TransformFunction {
 			} while (inputReader.next());
 			
 			ofstream binFile;
-			binFile.open("/tmp/test.bin", ios::binary);
+			binFile.open("/home/vertica/test.bin", ios::binary);
 			binFile.write(reinterpret_cast<char*>(&sum), sizeof(sum));
 			binFile.write(reinterpret_cast<char*>(&count), sizeof(count));
 			binFile.close();
