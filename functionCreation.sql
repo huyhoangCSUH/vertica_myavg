@@ -1,0 +1,1 @@
+CREATE LIBRARY myavg AS '/home/vertica/vertica_myavg/myavg.so';
