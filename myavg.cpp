@@ -27,8 +27,8 @@ class SumEtCount : public TransformFunction {
 			binFile.close();
 			ofstream txtFile;
 			txtFile.open("/home/vertica/test.txt");
-			txtFile << sum << endl;
-			txtFile << count << endl;;
+			txtFile << "sum" << endl;
+			txtFile << "count" << endl;;
 			txtFile.close();
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
