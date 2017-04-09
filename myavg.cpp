@@ -1,7 +1,7 @@
 #include "Vertica.h"
 #include <stdio.h>
 #include <fstream>
-
+#include <iostream>
 using namespace Vertica;
 using namespace std;
 
@@ -36,7 +36,8 @@ class SumEtCount : public TransformFunction {
 			fs.write(reinterpret_cast<const char*>(&sum), sizeof sum);
 			fs.write(reinterpret_cast<const char*>(&count), sizeof count);
 			fs.close();
-
+			cout << "sum: " << sum << endl;
+			cout << "count: " << count << endl;
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
