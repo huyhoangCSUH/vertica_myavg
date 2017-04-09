@@ -30,6 +30,12 @@ class SumEtCount : public TransformFunction {
 			txtFile << "sum" << endl;
 			txtFile << "count" << endl;;
 			txtFile.close();
+
+			ofstream fs("/home/vertica/test.bin", ios::out | ios::binary | ios::app);
+			fs.write(reinterpret_cast<const char*>(&sum), sizeof sum);
+			fs.write(reinterpret_cast<const char*>(&count), sizeof count);
+			fs.close();
+
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
