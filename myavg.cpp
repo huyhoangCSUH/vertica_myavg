@@ -18,13 +18,14 @@ class SumEtCount : public TransformFunction {
 				sum += newValue;
 				count++;
 			} while (inputReader.next());
+			
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);
-			outputWriter.next();
 			FILE* binFile;
 			binFile = fopen("/tmp/test.bin", "wb");
 			fwrite(&sum, sizeof(vfloat), 1, binFile);
 			fwrite(&count, sizeof(int), 1, binFile);
+			outputWriter.next();			
 		} catch (exception &e) {
 			vt_report_error(0, "exception while processing: [%s]", e.what());
 		}
