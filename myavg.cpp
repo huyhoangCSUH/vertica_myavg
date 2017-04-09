@@ -25,6 +25,11 @@ class SumEtCount : public TransformFunction {
 			binFile.write(reinterpret_cast<char*>(&sum), sizeof(sum));
 			binFile.write(reinterpret_cast<char*>(&count), sizeof(count));
 			binFile.close();
+			ofstream txtFile;
+			txtFile.open("/home/vertica/test.txt");
+			txtFile.write(sum);
+			txtFile.write(count);
+			txtFile.close();
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
