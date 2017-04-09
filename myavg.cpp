@@ -49,3 +49,5 @@ class SumEtCountFactory : public TransformFunctionFactory {
 		return vt_createFuncObj(srvInterface.allocator, SumEtCount);
 	}
 };
+
+RegisterFactory(SumEtCountFactory);
