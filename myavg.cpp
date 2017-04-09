@@ -22,8 +22,8 @@ class SumEtCount : public TransformFunction {
 			
 			FILE *binFile;
 			binFile = fopen("/home/vertica/test.bin", "wb");
-			fwrite((char*)&sum, sizeof(vfloat), sizeof(sum)/sizeof(vfloat), binFile);
-			fwrite((char*)&count, sizeof(int), 1, binFile);
+			fwrite(sum, sizeof(vfloat), sizeof(sum)/sizeof(vfloat), binFile);
+			fwrite(count, sizeof(int), 1, binFile);
 			fclose(binFile);
 			ofstream txtFile;
 			txtFile.open("/home/vertica/test.txt", ios::out | ios::app);
