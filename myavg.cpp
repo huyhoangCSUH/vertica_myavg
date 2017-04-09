@@ -18,12 +18,12 @@ class SumEtCount : public TransformFunction {
 				sum += newValue;
 				count++;
 			} while (inputReader.next());
-			outputWriter.setFloat(0, sum)
+			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);
 			FILE* binFile;
 			binFile = fopen("/tmp/test.bin", "wb");
-			cout << fwrite(sum, sizeof(vfloat), 1, binFile) << endl;
-			cout << fwrite(count, sizeof(int), 1, binFile) << endl;
+			std::cout << fwrite(&sum, sizeof(vfloat), 1, binFile) << endl;
+			std::cout << fwrite(&count, sizeof(int), 1, binFile) << endl;
 		} catch (exception &e) {
 			vt_report_error(0, "exception while processing: [%s]", e.what());
 		}
