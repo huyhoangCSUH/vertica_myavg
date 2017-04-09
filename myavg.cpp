@@ -38,14 +38,14 @@ class SumEtCountFactory : public TransformFunctionFactory {
 		returnType.addFloat();
 		returnType.addInt();
 	}
-	/*
+
 	virtual void getReturnType(ServerInterface &srvInterface,
 		const SizedColumnTypes &input_types,
-    		SizedColumnTypes &output_types) {
+		SizedColumnTypes &output_types) {
 		output_types.addFloat("The Sum");
 		output_types.addInt("The Count");
 	}
-	*/
+
 	virtual TransformFunction *createTransformFunction(ServerInterface &srvInterface) {
 		return vt_createFuncObj(srvInterface.allocator, SumEtCount);
 	}
