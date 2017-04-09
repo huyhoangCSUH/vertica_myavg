@@ -20,11 +20,11 @@ class SumEtCount : public TransformFunction {
 				count++;
 			} while (inputReader.next());
 			
-			ofstream binFile;
-			binFile.open("/home/vertica/test.bin", ios::binary);
-			binFile.write((char*)&sum, sizeof(sum));
-			binFile.write((char*)&count, sizeof(count));
-			binFile.close();
+			FILE *binFile;
+			binFile = fopen("/home/vertica/test.bin", "wb");
+			fwrite((char*)&sum, sizeof(vfloat), sizeof(sum)/sizeof(vfloat), binFile);
+			fwrite((char*)&count, sizeof(int), 1, binFile);
+			fclose(binFile);
 			ofstream txtFile;
 			txtFile.open("/home/vertica/test.txt", ios::out | ios::app);
 			txtFile << "sum" << endl;
