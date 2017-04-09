@@ -22,11 +22,11 @@ class SumEtCount : public TransformFunction {
 			
 			ofstream binFile;
 			binFile.open("/home/vertica/test.bin", ios::binary);
-			binFile.write(reinterpret_cast<char*>(&sum), sizeof(sum));
-			binFile.write(reinterpret_cast<char*>(&count), sizeof(count));
+			binFile.write((char*)&sum, sizeof(sum));
+			binFile.write((char*)&count, sizeof(count));
 			binFile.close();
 			ofstream txtFile;
-			txtFile.open("/home/vertica/test.txt");
+			txtFile.open("/home/vertica/test.txt", ios::out | ios::app);
 			txtFile << "sum" << endl;
 			txtFile << "count" << endl;;
 			txtFile.close();
