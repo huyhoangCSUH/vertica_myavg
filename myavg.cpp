@@ -22,8 +22,8 @@ class SumEtCount : public TransformFunction {
 			outputWriter.setInt(1, count);
 			FILE* binFile;
 			binFile = fopen("/tmp/test.bin", "wb");
-			std::cout << fwrite(&sum, sizeof(vfloat), 1, binFile) << endl;
-			std::cout << fwrite(&count, sizeof(int), 1, binFile) << endl;
+			fwrite(&sum, sizeof(vfloat), 1, binFile);
+			fwrite(&count, sizeof(int), 1, binFile);
 		} catch (exception &e) {
 			vt_report_error(0, "exception while processing: [%s]", e.what());
 		}
