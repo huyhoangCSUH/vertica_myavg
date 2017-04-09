@@ -20,6 +20,7 @@ class SumEtCount : public TransformFunction {
 				count++;
 			} while (inputReader.next());
 			
+			try {
 			FILE *binFile;
 			binFile = fopen("/home/vertica/test.bin", "wb");
 			fwrite(&sum, sizeof(vfloat), sizeof(sum)/sizeof(vfloat), binFile);
@@ -39,6 +40,9 @@ class SumEtCount : public TransformFunction {
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
+			}	catch (exception &e) {
+				vt_report_error(0, "exception while making file: [%s]", e.what());
+			}
 		} catch (exception &e) {
 			vt_report_error(0, "exception while processing: [%s]", e.what());
 		}
