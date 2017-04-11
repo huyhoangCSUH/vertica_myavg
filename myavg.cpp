@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 using namespace Vertica;
+using namespace std;
 
 class SumEtCount : public TransformFunction {
 	// Called for each partition in the table
@@ -22,7 +23,7 @@ class SumEtCount : public TransformFunction {
 			outputWriter.setInt(1, count);	
 			uint64_t sumBin;
 			memcpy(&sumBin, &sum, sizeof(sum));
-			outputWriter.setDataArea(2, sumBin);
+			outputWriter.setDataArea(2, &sumBin);
 			outputWriter.next();
 			/*
 			try {
