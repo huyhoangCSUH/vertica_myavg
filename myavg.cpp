@@ -68,8 +68,9 @@ class SumEtCountFactory : public TransformFunctionFactory {
 	virtual void getReturnType(ServerInterface &srvInterface,
 		const SizedColumnTypes &input_types,
 		SizedColumnTypes &output_types) {
-		output_types.addFloat("The Sum");
-		output_types.addInt("The Count");
+		output_types.addFloat("Sum");
+		output_types.addInt("Count");
+		output_types.addVarbinary("Count in Bin");
 	}
 
 	virtual TransformFunction *createTransformFunction(ServerInterface &srvInterface) {
