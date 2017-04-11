@@ -25,7 +25,7 @@ class SumEtCount : public TransformFunction {
 			//uint64_t sumBin;
 			//memcpy(&sumBin, &sum, sizeof(sum));
 			char* counBin = reinterpret_cast<char*> (&count);
-			outputWriter.setDataArea(2, &count);
+			outputWriter.setDataArea(2, counBin);
 			outputWriter.next();
 			/*
 			try {
