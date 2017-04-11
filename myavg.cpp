@@ -62,7 +62,7 @@ class SumEtCountFactory : public TransformFunctionFactory {
 		argTypes.addFloat();
 		returnType.addFloat();
 		returnType.addInt();
-		returnType.addVarbinary();
+		returnType.addBinary();
 	}
 
 	virtual void getReturnType(ServerInterface &srvInterface,
