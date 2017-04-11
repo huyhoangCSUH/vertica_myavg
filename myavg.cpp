@@ -26,7 +26,7 @@ class SumEtCount : public TransformFunction {
 			outputWriter.setInt(1, count);	
 			myUnion binVal;
 			binVal.dVal = sum;
-			outputWriter.setDataArea(2, myUnion.iVal);
+			outputWriter.setDataArea(2, &myUnion->iVal);
 			outputWriter.next();
 			/*
 			try {
