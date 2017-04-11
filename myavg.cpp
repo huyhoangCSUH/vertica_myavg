@@ -36,8 +36,8 @@ class SumEtCount : public TransformFunction {
 			fs.write(reinterpret_cast<const char*>(&sum), sizeof sum);
 			fs.write(reinterpret_cast<const char*>(&count), sizeof count);
 			fs.close();
-			srvInterface.vlog("sum: %g\n", sum);
-			srvInterface.vlog("count: %d\n", count);
+			srvInterface.log("sum: %g\n", sum);
+			srvInterface.log("count: %d\n", count);
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
