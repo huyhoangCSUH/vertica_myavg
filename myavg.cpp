@@ -3,10 +3,6 @@
 #include <fstream>
 #include <iostream>
 using namespace Vertica;
-union myUnion  {
-	vfloat dVal;
-	int64_t iVal;
-};
 
 class SumEtCount : public TransformFunction {
 	// Called for each partition in the table
@@ -24,9 +20,9 @@ class SumEtCount : public TransformFunction {
 			} while (inputReader.next());
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);	
-			myUnion binVal;
-			binVal.dVal = sum;
-			outputWriter.setDataArea(2, &myUnion->iVal);
+			uint64_t sumBin;
+			memcpy(&sumBin, &sum, sizeof(sum));
+			outputWriter.setDataArea(2, sumBin);
 			outputWriter.next();
 			/*
 			try {
@@ -65,7 +61,7 @@ class SumEtCountFactory : public TransformFunctionFactory {
 		argTypes.addFloat();
 		returnType.addFloat();
 		returnType.addInt();
-		returnType.addBinary();
+		returnType.addLongVarBinary();
 	}
 
 	virtual void getReturnType(ServerInterface &srvInterface,
