@@ -21,9 +21,9 @@ class SumEtCount : public TransformFunction {
 			} while (inputReader.next());
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);	
-			uint64_t sumBin;
+			vint sumBin;
 			memcpy(&sumBin, &sum, sizeof(sum));
-			outputWriter.setDataArea(2, &sumBin);
+			outputWriter.setInt(2, &sumBin);
 			outputWriter.next();
 			/*
 			try {
