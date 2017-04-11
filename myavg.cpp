@@ -23,7 +23,7 @@ class SumEtCount : public TransformFunction {
 			outputWriter.setInt(1, count);	
 			vint sumBin;
 			memcpy(&sumBin, &sum, sizeof(sum));
-			outputWriter.setInt(2, &sumBin);
+			outputWriter.setDataArea(2, &sumBin);
 			outputWriter.next();
 			/*
 			try {
