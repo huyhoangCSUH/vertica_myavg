@@ -14,6 +14,10 @@ class SumEtCount : public TransformFunction {
 		try {
 			int count = 0;
 			vfloat sum = 0;
+			union {
+				unsigned long long binval;
+				double dval;
+			} myU;
 			do {
 				const vfloat newValue = inputReader.getFloatRef(0);
 				sum += newValue;
@@ -21,9 +25,10 @@ class SumEtCount : public TransformFunction {
 			} while (inputReader.next());
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);	
-			vint sumBin;
-			memcpy(&sumBin, &sum, sizeof(sum));
-			outputWriter.setDataArea(2, &sumBin);
+			//uint64_t sumBin;
+			//memcpy(&sumBin, &sum, sizeof(sum));
+			myU.dval = sum;
+			outputWriter.setDataArea(2, &myU);
 			outputWriter.next();
 			/*
 			try {
