@@ -70,7 +70,7 @@ class SumEtCountFactory : public TransformFunctionFactory {
 		SizedColumnTypes &output_types) {
 		output_types.addFloat("Sum");
 		output_types.addInt("Count");
-		output_types.addVarbinary("Count in Bin");
+		output_types.addBinary(8, "Count in Bin");
 	}
 
 	virtual TransformFunction *createTransformFunction(ServerInterface &srvInterface) {
