@@ -36,8 +36,8 @@ class SumEtCount : public TransformFunction {
 			fs.write(reinterpret_cast<const char*>(&sum), sizeof sum);
 			fs.write(reinterpret_cast<const char*>(&count), sizeof count);
 			fs.close();
-			printf("sum: %g\n", sum);
-			printf("count: %d\n", count);
+			log("sum: %g\n", sum);
+			log("count: %d\n", count);
 			outputWriter.setFloat(0, sum);
 			outputWriter.setInt(1, count);			
 			outputWriter.next();			
