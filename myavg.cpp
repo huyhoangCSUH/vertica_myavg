@@ -3,7 +3,10 @@
 #include <fstream>
 #include <iostream>
 using namespace Vertica;
-using namespace std;
+union myUnion  {
+	vfloat dVal;
+	int64_t iVal;
+};
 
 class SumEtCount : public TransformFunction {
 	// Called for each partition in the table
@@ -19,31 +22,37 @@ class SumEtCount : public TransformFunction {
 				sum += newValue;
 				count++;
 			} while (inputReader.next());
-			
-			try {
-			FILE *binFile;
-			binFile = fopen("/home/vertica/test.bin", "wb");
-			fwrite(&sum, sizeof(vfloat), sizeof(sum)/sizeof(vfloat), binFile);
-			fwrite(&count, sizeof(int), 1, binFile);
-			fclose(binFile);
-			ofstream txtFile;
-			txtFile.open("/home/vertica/test.txt", ios::out | ios::app);
-			txtFile << "sum" << endl;
-			txtFile << "count" << endl;;
-			txtFile.close();
-
-			ofstream fs("/home/vertica/test.bin", ios::out | ios::binary | ios::app);
-			fs.write(reinterpret_cast<const char*>(&sum), sizeof sum);
-			fs.write(reinterpret_cast<const char*>(&count), sizeof count);
-			fs.close();
-			srvInterface.log("sum: %g\n", sum);
-			srvInterface.log("count: %d\n", count);
 			outputWriter.setFloat(0, sum);
-			outputWriter.setInt(1, count);			
-			outputWriter.next();			
+			outputWriter.setInt(1, count);	
+			myUnion binVal;
+			binVal.dVal = sum;
+			outputWriter.setDataArea(2, myUnion.iVal);
+			outputWriter.next();
+			/*
+			try {
+				FILE *binFile;
+				binFile = fopen("/home/vertica/test.bin", "wb");
+				fwrite(&sum, sizeof(vfloat), sizeof(sum)/sizeof(vfloat), binFile);
+				fwrite(&count, sizeof(int), 1, binFile);
+				fclose(binFile);
+				
+				ofstream txtFile;
+				txtFile.open("/home/vertica/test.txt", ios::out | ios::app);
+				txtFile << "sum" << endl;
+				txtFile << "count" << endl;;
+				txtFile.close();
+
+				ofstream fs("/home/vertica/test.bin", ios::out | ios::binary | ios::app);
+				fs.write(reinterpret_cast<const char*>(&sum), sizeof sum);
+				fs.write(reinterpret_cast<const char*>(&count), sizeof count);
+				fs.close();
+				srvInterface.log("sum: %g\n", sum);
+				srvInterface.log("count: %d\n", count);
+							
 			}	catch (exception &e) {
 				vt_report_error(0, "exception while making file: [%s]", e.what());
 			}
+			*/
 		} catch (exception &e) {
 			vt_report_error(0, "exception while processing: [%s]", e.what());
 		}
@@ -56,6 +65,7 @@ class SumEtCountFactory : public TransformFunctionFactory {
 		argTypes.addFloat();
 		returnType.addFloat();
 		returnType.addInt();
+		returnType.addBinary();
 	}
 
 	virtual void getReturnType(ServerInterface &srvInterface,
